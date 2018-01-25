@@ -14,7 +14,12 @@ const sortRows = (rows, sortColumn, sortDirection) => {
   const retriever = getMixedTypeValueRetriever(isImmutableCollection(rows));
   let sortDirectionSign = sortDirection === 'ASC' ? 1 : -1;
   let rowComparer = (a, b) => {
-    return sortDirectionSign * comparer(retriever.getValue(a, sortColumn), retriever.getValue(b, sortColumn));
+    // Case-insensitive sorting.
+    var av = retriever.getValue(a, sortColumn);
+    var bv = retriever.getValue(b, sortColumn);
+    var avs = av === undefined ? av : av.toString().trim().toLowerCase();
+    var bvs = bv === undefined ? bv : bv.toString().trim().toLowerCase();
+    return sortDirectionSign * comparer(avs, bvs);
   };
   if (sortDirection === 'NONE') {
     return rows;

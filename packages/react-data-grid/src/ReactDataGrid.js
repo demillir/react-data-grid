@@ -151,7 +151,7 @@ const ReactDataGrid = createReactClass({
 
   getInitialState: function(): {selected: SelectedType; copied: ?{idx: number; rowIdx: number}; selectedRows: Array<Row>; expandedRows: Array<Row>; canFilter: boolean; columnFilters: any; sortDirection: ?SortType; sortColumn: ?ExcelColumn; dragged: ?DraggedType;  } {
     let columnMetrics = this.createColumnMetrics();
-    let initialState = {columnMetrics, selectedRows: [], copied: null, expandedRows: [], canFilter: false, columnFilters: {}, sortDirection: null, sortColumn: null, dragged: null, scrollOffset: 0, lastRowIdxUiSelected: -1};
+    let initialState = {columnMetrics, selectedRows: [], copied: null, expandedRows: [], canFilter: this.props.canFilter, columnFilters: {}, sortDirection: null, sortColumn: null, dragged: null, scrollOffset: 0, lastRowIdxUiSelected: -1};
     if (this.props.enableCellSelect) {
       initialState.selected = {rowIdx: 0, idx: 0};
     } else {
@@ -1088,8 +1088,8 @@ const ReactDataGrid = createReactClass({
             rowSelection={this.getRowSelectionProps()}
             expandedRows={this.state.expandedRows}
             rowOffsetHeight={this.getRowOffsetHeight()}
-            sortColumn={this.state.sortColumn}
-            sortDirection={this.state.sortDirection}
+            sortColumn={this.props.sortColumn}
+            sortDirection={this.props.sortDirection}
             onSort={this.handleSort}
             minHeight={this.props.minHeight}
             totalWidth={gridWidth}
